@@ -3,11 +3,22 @@ The following lists the tools and frameworks, that are used in the project.
 - [Docker](https://docs.docker.com/get-started/overview/)    
    Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications. By taking advantage of Docker's methodologies for shipping, testing, and deploying code, you can significantly reduce the delay between writing code and running it in production.
 - [Kubernetes](https://kubernetes.io/docs/concepts/overview/)
+    Kubernetes is an open-source container orchestration platform for automating the deployment, scaling, and management of containerized applications. Key components include nodes (worker machines), clusters (groups of nodes), and pods (the smallest deployable units, containing one or more containers). It helps in maintaining the availability and scalability of applications in a dynamic and efficient manner.
 - [FastAPI](https://fastapi.tiangolo.com/tutorial/)
+    is a versatile and developer-friendly framework that simplifies API development, embraces asynchronous programming, and ensures data validation and serialization, all while delivering high performance.
+      - Easy API Creation
+      - Asynchronous Support
+      - Data Validation and Serialization
+      - Dependency Injection
+      - High Performance
 - [SQLAlchemy](https://docs.sqlalchemy.org/en/20/orm/quickstart.html)
+    SQLAlchemy is a powerful and popular Python library used for working with relational databases. It provides a high-level, Pythonic interface for interacting with databases, making it easier to perform database operations without writing raw SQL queries. SQLAlchemy simplifies database interaction in Python applications by providing an ORM, a high-level querying API, and support for multiple database systems. It helps developers work with databases more efficiently and maintain code that is both readable and maintainable.
 - [FastAPI with SQLAlchemy](https://fastapi.tiangolo.com/tutorial/sql-databases/)
+    FastAPI with SQLAlchemy are often used together in web development to create robust and efficient web applications, especially when building RESTful APIs or web services. FastAPI with SQLAlchemy provides a powerful combination for building web applications and APIs with Python. FastAPI handles the web-related aspects of your application, including request handling, data validation, and serialization, while SQLAlchemy takes care of database interactions, making it easier to create scalable, efficient, and maintainable web services.
 - [Alembic](https://alembic.sqlalchemy.org/en/latest/tutorial.html)
+    Alembic is a popular database migration tool for Python that is often used in conjunction with Object-Relational Mapping (ORM) libraries like SQLAlchemy. Its primary purpose is to automate and manage the process of evolving and versioning a database schema over time. Alembic is a valuable tool for managing database schema changes and ensuring that your application's database stays up-to-date as your data model evolves. It simplifies the process of creating, applying, and rolling back database schema migrations, and it is often used in combination with SQLAlchemy to maintain a smooth workflow when working with relational databases in Python applications.
 - [Swagger UI](https://swagger.io/tools/swagger-ui/)
+    Swagger UI is a user interface that provides a visual representation of the documentation for RESTful APIs, based on the OpenAPI Specification (formerly known as Swagger). Swagger UI is a valuable tool for API developers and consumers, providing an interactive and well-structured way to explore, test, and understand RESTful APIs. It enhances the development and integration process by providing clear, self-updating API documentation that simplifies working with and consuming APIs.
 
 # GitLab CI/CD
 
