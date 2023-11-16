@@ -26,17 +26,43 @@ The following is a collection of short hints on how to do the most essential thi
 
 - How to delay a job until another job is done: 
 
+Use the “needs” keyword and specify which job 
+
+Ex: 
+
+needs: test_job
+
 - How to change the image used in a task: 
+
+Use the “image” keyword
+
+Ex:
+
+image: ruby:2.7
     
 - How do you start a task manually:
 
+Use the “when” keyword
+
+Ex: 
+
+when: manual
+
 - The Script part of the config file - what is it good for?
+
+It is used to define the commands that must be carried out as part of the job when it is executed
 
 - If I want a task to run for every branch I put it into the stage ??
 
+build
+
 - If I want a task to run for every merge request I put it into the stage ??
 
+test
+
 - If I want a task to run for every commit to the main branch I put it into the stage ??
+
+deploy
 
 # flake8 / flakeheaven
 
