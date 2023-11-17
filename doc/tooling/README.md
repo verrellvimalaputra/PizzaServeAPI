@@ -30,7 +30,7 @@ Use the “needs” keyword and specify which job
 
 Ex: 
 
-needs: test_job
+needs: create_release_candidate
 
 - How to change the image used in a task: 
 
@@ -54,15 +54,15 @@ It is used to define the commands that must be carried out as part of the job wh
 
 - If I want a task to run for every branch I put it into the stage ??
 
-build
+commit
 
 - If I want a task to run for every merge request I put it into the stage ??
 
-test
+acceptance
 
 - If I want a task to run for every commit to the main branch I put it into the stage ??
 
-deploy
+release
 
 # flake8 / flakeheaven
 
