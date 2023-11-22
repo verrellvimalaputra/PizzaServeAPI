@@ -1,4 +1,5 @@
 import uuid
+import logging
 from typing import List, TypeVar
 
 from fastapi import APIRouter, Depends, Request, Response, status, HTTPException
@@ -77,6 +78,7 @@ def update_pizza_type(
                 updated_pizza_type = pizza_type_crud.create_pizza_type(changed_pizza_type, db)
                 response.status_code = status.HTTP_201_CREATED
     else:
+        logging.error('pizza type {} not found'.format(pizza_type_id))
         raise HTTPException(status_code=404, detail='Item not found')
 
     return updated_pizza_type

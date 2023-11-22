@@ -1,4 +1,5 @@
 import uuid
+import logging
 
 from sqlalchemy.orm import Session
 
@@ -12,6 +13,7 @@ def create_pizza_type(schema: PizzaTypeCreateSchema, db: Session):
     entity = PizzaType(**schema.dict())
     db.add(entity)
     db.commit()
+    logging.info('pizza type created with name {}'.format(entity.name))
     return entity
 
 

@@ -1,4 +1,5 @@
 import uuid
+import logging
 from typing import List
 
 from fastapi import APIRouter, Depends, Request, Response, status, HTTPException
@@ -63,6 +64,7 @@ def update_dough(
                 updated_dough = dough_crud.create_dough(changed_dough, db)
                 response.status_code = status.HTTP_201_CREATED
     else:
+        logging.error('dough {} not found'.format(dough_id))
         raise HTTPException(status_code=404, detail='Item not found')
 
     return updated_dough

@@ -1,4 +1,5 @@
 import uuid
+import logging
 from typing import List
 
 from sqlalchemy import func
@@ -14,9 +15,10 @@ def create_order(schema: OrderCreateSchema, db: Session):
     address = create_address(schema.address, db)
     order = Order(user_id=schema.user_id)
     order.address = address
-    order.order_status = OrderStatus.COMPLETED
+    order.order_status = OrderStatus.TRANSMITTED
     db.add(order)
     db.commit()
+    logging.info('Beverage created with id {}'.format(order.id))
     return order
 
 
@@ -168,4 +170,4 @@ def get_price_of_order(
 
     # if order has pizza and beverage, return the price of pizza + beverage
     if price_pizza is not None:
-        return price_pizza
+        return price_pizza + price_beverage

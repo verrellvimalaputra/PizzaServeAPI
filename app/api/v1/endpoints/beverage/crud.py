@@ -1,4 +1,5 @@
 import uuid
+import logging
 
 from sqlalchemy.orm import Session
 
@@ -10,6 +11,7 @@ def create_beverage(schema: BeverageCreateSchema, db: Session):
     entity = Beverage(**schema.dict())
     db.add(entity)
     db.commit()
+    logging.info('Beverage created with name {}'.format(entity.name))
     return entity
 
 
