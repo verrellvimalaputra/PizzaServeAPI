@@ -1,4 +1,5 @@
 import uuid
+import logging
 from typing import List, Optional, TypeVar
 
 from fastapi import APIRouter, Depends, Request, Response, status, HTTPException
@@ -88,6 +89,7 @@ def get_order(
         db: Session = Depends(get_db)):
     order = order_crud.get_order_by_id(order_id, db)
     if not order:
+        logging.error('Order {} not found'.format(order_id))
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
     return order
@@ -100,6 +102,7 @@ def delete_order(
 ):
     order = order_crud.get_order_by_id(order_id, db)
     if not order:
+        logging.error('Order {} not found'.format(order_id))
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
     ordered_pizzas = order.pizzas
@@ -122,6 +125,7 @@ def add_pizza_to_order(
 ):
     order = order_crud.get_order_by_id(order_id, db)
     if not order:
+        logging.error('Order {} not found'.format(order_id))
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
     pizza_type = pizza_type_crud.get_pizza_type_by_id(schema.pizza_type_id, db)
@@ -141,6 +145,7 @@ def get_pizzas_from_order(
 ):
     order = order_crud.get_order_by_id(order_id, db)
     if not order:
+        logging.error('Order {} not found'.format(order_id))
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
     pizzas = order_crud.get_all_pizzas_of_order(order, db)
@@ -155,6 +160,7 @@ def delete_pizza_from_order(
 ):
     order = order_crud.get_order_by_id(order_id, db)
     if not order:
+        logging.error('Order {} not found'.format(order_id))
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
     pizza_entity = order_crud.get_pizza_by_id(pizza.id, db)
@@ -192,6 +198,7 @@ def get_order_beverages(
 ):
     order = order_crud.get_order_by_id(order_id, db)
     if not order:
+        logging.error('Order {} not found'.format(order_id))
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
     order = order_crud.get_order_by_id(order_id, db)
@@ -217,6 +224,7 @@ def create_order_beverage(
 ):
     order = order_crud.get_order_by_id(order_id, db)
     if not order:
+        logging.error('Order {} not found'.format(order_id))
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
     # Check if new Quantity is valid
@@ -251,6 +259,7 @@ def update_beverage_of_order(
 ):
     order = order_crud.get_order_by_id(order_id, db)
     if not order:
+        logging.error('Order {} not found'.format(order_id))
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
     # Check if new Quantity is valid
@@ -286,6 +295,7 @@ def delete_beverage_from_order(
 ):
     order = order_crud.get_order_by_id(order_id, db)
     if not order:
+        logging.error('Order {} not found'.format(order_id))
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
     order_beverage = order_crud.get_beverage_quantity_by_id(order_id, beverage_id, db)
@@ -311,6 +321,7 @@ def get_price_of_order(
 ):
     order = order_crud.get_order_by_id(order_id, db)
     if not order:
+        logging.error('Order {} not found'.format(order_id))
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
     price = order_crud.get_price_of_order(order_id, db)
@@ -331,6 +342,7 @@ def get_user_of_order(
 ):
     order = order_crud.get_order_by_id(order_id, db)
     if not order:
+        logging.error('Order {} not found'.format(order_id))
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
     order = order_crud.get_order_by_id(order_id, db)

@@ -1,4 +1,5 @@
 import uuid
+import logging
 from typing import List
 
 from fastapi import APIRouter, Depends, Request, Response, status, HTTPException
@@ -65,6 +66,7 @@ def update_topping(
                 updated_topping = topping_crud.create_topping(changed_topping, db)
                 response.status_code = status.HTTP_201_CREATED
     else:
+        logging.error('topping {} not found'.format(topping_id))
         raise HTTPException(status_code=404, detail='Item not found')
 
     return updated_topping

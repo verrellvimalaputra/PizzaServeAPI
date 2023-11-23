@@ -1,4 +1,5 @@
 import uuid
+import logging
 from typing import List
 
 from sqlalchemy import func
@@ -17,6 +18,7 @@ def create_order(schema: OrderCreateSchema, db: Session):
     order.order_status = OrderStatus.TRANSMITTED
     db.add(order)
     db.commit()
+    logging.info('Beverage created with id {}'.format(order.id))
     return order
 
 

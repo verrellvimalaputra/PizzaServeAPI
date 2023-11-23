@@ -1,4 +1,5 @@
 import uuid
+import logging
 from typing import List
 
 from fastapi import APIRouter, Depends, Request, Response, status, HTTPException
@@ -64,6 +65,7 @@ def update_beverage(
                 updated_beverage = beverage_crud.create_beverage(changed_beverage, db)
                 response.status_code = status.HTTP_201_CREATED
     else:
+        logging.error('Beverage {} not found'.format(beverage_id))
         raise HTTPException(status_code=404, detail='Item not found')
 
     return updated_beverage
