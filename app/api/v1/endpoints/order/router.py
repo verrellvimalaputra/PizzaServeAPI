@@ -132,6 +132,7 @@ def add_pizza_to_order(
     if not pizza_type:
         return Response(status_code=status.HTTP_404_NOT_FOUND)
     if not stock_ingredients_crud.ingredients_are_available(pizza_type):
+        logging.error('Pizza {} not found'.format(pizza_type))
         return Response(status_code=status.HTTP_409_CONFLICT)
     stock_ingredients_crud.reduce_stock_of_ingredients(pizza_type, db)
     pizza = order_crud.add_pizza_to_order(order, pizza_type, db)
