@@ -66,11 +66,18 @@ release
 
 # flake8 / flakeheaven
 
-- What is the purpose of flake8?
+- What is the purpose of flake8?<br>
+Flake8 is used for checking code quality in Python.
 
-- What types of problems does it detect
+- What types of problems does it detect <br>
+Syntax errors, undefined names, code style violations, unused Imports and Variables
 
-- Why should you use a tool like flake8 in a serious project?
+- Why should you use a tool like flake8 in a serious project?<br>
+Improve project's overall quality, maintainablity.<br>
+Enforce consistent coding style.<br>
+Automated code review (linting).<br>
+Reduce technical debt
+
 
 ## Run flake8 on your local Computer
 
@@ -102,12 +109,21 @@ If you like it convenient: Add a button for flake8 to your toolbar!
 
 - What is the purpose of GrayLog?
 
+Allows us to collect, index and anaylse any machine logs centrally
+
 - What logging levels are available?
+
+DEBUG, INFO, WARNING, ERROR, CRITICAL
 
 - What is the default logging level?
 
+WARNING
+
 - Give 3-4 examples for logging commands in Python:
   ```python
+  logging.debug('This message should go to the log file')
+  logging.info('So should this')
+  logging.warning('This is a warning')
 
   ```
 
