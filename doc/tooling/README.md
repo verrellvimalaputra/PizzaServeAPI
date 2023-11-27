@@ -108,19 +108,23 @@ If you like it convenient: Add a button for flake8 to your toolbar!
 # GrayLog
 
 - What is the purpose of GrayLog?
+
 Allows us to collect, index and anaylse any machine logs centrally
 
 - What logging levels are available?
+
 DEBUG, INFO, WARNING, ERROR, CRITICAL
 
 - What is the default logging level?
+
 WARNING
 
 - Give 3-4 examples for logging commands in Python:
   ```python
-logging.debug('This message should go to the log file')
-logging.info('So should this')
-logging.warning('This is a warning')
+  logging.debug('This message should go to the log file')
+  logging.info('So should this')
+  logging.warning('This is a warning')
+
   ```
 
 # SonarQube
