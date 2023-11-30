@@ -233,6 +233,7 @@ migrate_database_in_production:
     - schedules
 
 sonarqube-check:
+  stage: commit
   image: 
     name: sonarsource/sonar-scanner-cli:latest
     entrypoint: [""]
