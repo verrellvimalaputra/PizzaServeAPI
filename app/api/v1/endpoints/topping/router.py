@@ -10,6 +10,8 @@ import app.api.v1.endpoints.topping.crud as topping_crud
 from app.api.v1.endpoints.topping.schemas import ToppingSchema, ToppingCreateSchema, ToppingListItemSchema
 from app.database.connection import SessionLocal
 
+ITEM_NOT_FOUND = 'Item not found'
+
 router = APIRouter()
 
 
@@ -67,7 +69,7 @@ def update_topping(
                 response.status_code = status.HTTP_201_CREATED
     else:
         logging.error('topping {} not found'.format(topping_id))
-        raise HTTPException(status_code=404, detail='Item not found')
+        raise HTTPException(status_code=404, detail=ITEM_NOT_FOUND)
 
     return updated_topping
 
@@ -80,7 +82,7 @@ def get_topping(topping_id: uuid.UUID,
     topping = topping_crud.get_topping_by_id(topping_id, db)
 
     if not topping:
-        raise HTTPException(status_code=404, detail='Item not found')
+        raise HTTPException(status_code=404, detail=ITEM_NOT_FOUND)
 
     return topping
 
@@ -90,7 +92,7 @@ def delete_topping(topping_id: uuid.UUID, db: Session = Depends(get_db)):
     topping = topping_crud.get_topping_by_id(topping_id, db)
 
     if not topping:
-        raise HTTPException(status_code=404, detail='Item not found')
+        raise HTTPException(status_code=404, detail=ITEM_NOT_FOUND)
 
     topping_crud.delete_topping_by_id(topping_id, db)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
