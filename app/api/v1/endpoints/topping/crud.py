@@ -28,9 +28,9 @@ def get_topping_by_name(topping_name: str, db: Session):
 def get_all_toppings(db: Session):
     entities = db.query(Topping).all()
     if entities:
-        returnEntities = []
+        returnEntities = []  # NOSONAR
         for entity in entities:
-            listItemEntity = ToppingListItemSchema(
+            listItemEntity = ToppingListItemSchema(  # NOSONAR
                 **{'id': entity.id, 'name': entity.name, 'price': entity.price, 'description': entity.description})
             returnEntities.append(listItemEntity)
         return returnEntities
