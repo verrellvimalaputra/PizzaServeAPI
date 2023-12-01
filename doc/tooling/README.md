@@ -136,9 +136,9 @@ SonarQube is a code quality assurance tool that performs in-depth code analysis
 - What is the purpose of the quality rules of SonarQube?
 
 It is used to generate issues to detect bugs, code smells and security vulnerabilities. There are four types of rules:
-Code smell (maintainability domain)
-Bug (reliability domain)
-Vulnerability (security domain)
+Code smell (maintainability domain)<br>
+Bug (reliability domain)<br>
+Vulnerability (security domain)<br>
 Security hotspot (security domain)
 
 - What is the purpose of the quality gates of SonarQube?
