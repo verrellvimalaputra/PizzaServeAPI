@@ -131,9 +131,19 @@ WARNING
 
 - What is the purpose of SonarQube?
 
+SonarQube is a code quality assurance tool that performs in-depth code analysis and generates an analysis report to ensure code reliability.
+
 - What is the purpose of the quality rules of SonarQube?
 
+It is used to generate issues to detect bugs, code smells and security vulnerabilities. There are four types of rules:
+Code smell (maintainability domain)
+Bug (reliability domain)
+Vulnerability (security domain)
+Security hotspot (security domain)
+
 - What is the purpose of the quality gates of SonarQube?
+
+Quality Gates are the set of conditions a project must meet before it should be pushed to further environments. It tells us if the code meets the minimum level of quality required for the project.
 
 
 ## Run SonarLint on your local Computer
