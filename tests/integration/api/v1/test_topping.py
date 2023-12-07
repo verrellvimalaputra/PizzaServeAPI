@@ -23,9 +23,9 @@ def test_topping_create_read_delete(db):
 
     # Arrange: Instantiate a new topping object
     topping = ToppingCreateSchema(name=new_topping_name,
-                                    price=new_topping_price,
-                                    description=new_topping_description,
-                                    stock=new_topping_stock)
+                                  price=new_topping_price,
+                                  description=new_topping_description,
+                                  stock=new_topping_stock)
     # Act: Add topping to database
     db_topping = topping_crud.create_topping(topping, db)
     created_topping_id = db_topping.id
