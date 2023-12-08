@@ -53,7 +53,6 @@ def test_beverage_create_read_delete(db):
 
     # Act: Update beverage
     beverage_crud.update_beverage(read_beverage, updated_beverage, db)
-
     read_updated_beverage = beverage_crud.get_beverage_by_name(update_beverage_name, db)
 
     # Assert: Correct beverage name was updated
