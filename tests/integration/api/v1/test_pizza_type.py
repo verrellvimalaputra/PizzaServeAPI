@@ -1,9 +1,9 @@
 import pytest
 
-import app.api.v1.endpoints.pizza_type.crud as pizza_type_crud
 import app.api.v1.endpoints.dough.crud as dough_crud
-from app.api.v1.endpoints.pizza_type.schemas import PizzaTypeCreateSchema
+import app.api.v1.endpoints.pizza_type.crud as pizza_type_crud
 from app.api.v1.endpoints.dough.schemas import DoughCreateSchema
+from app.api.v1.endpoints.pizza_type.schemas import PizzaTypeCreateSchema
 from app.database.connection import SessionLocal
 
 
@@ -20,6 +20,11 @@ def test_pizza_type_create_read_delete(db):
     new_pizza_type_name = 'test'
     new_pizza_type_price = 8
     new_pizza_type_description = 'Pepsi'
+
+    update_pizza_type_name = 'test'
+    update_pizza_type_price = 8
+    update_pizza_type_description = 'new pizza'
+
     number_of_pizza_types_before = len(pizza_type_crud.get_all_pizza_types(db))
     number_of_doughs_before = len(dough_crud.get_all_doughs(db))
 
@@ -29,8 +34,7 @@ def test_pizza_type_create_read_delete(db):
     created_dough_id = db_dough.id
 
     pizza_type = PizzaTypeCreateSchema(name=new_pizza_type_name, price=new_pizza_type_price,
-                                       description=new_pizza_type_description,
-                                       dough_id=created_dough_id)
+                                       description=new_pizza_type_description, dough_id=created_dough_id)
 
     # # Act: Add pizza_type to database
     db_pizza_type = pizza_type_crud.create_pizza_type(pizza_type, db)
@@ -47,7 +51,20 @@ def test_pizza_type_create_read_delete(db):
     assert read_pizza_type.id == created_pizza_type_id
     assert read_pizza_type.name == new_pizza_type_name
 
-    # Act: Delete pizza_type
+    # Act: Update pizza_type in database
+    update_pizza = pizza_type_crud.update_pizza_type(read_pizza_type,
+                                                     PizzaTypeCreateSchema(name=update_pizza_type_name,
+                                                                           price=update_pizza_type_price,
+                                                                           description=update_pizza_type_description,
+                                                                           dough_id=created_dough_id),
+                                                     db)
+
+    # Assert: Old pizza_type was updated
+    assert update_pizza.name == update_pizza_type_name
+    assert update_pizza.price == update_pizza_type_price
+    assert update_pizza.description == update_pizza_type_description
+
+    # Act: Delete pizza_type from database
     pizza_type_crud.delete_pizza_type_by_id(created_pizza_type_id, db)
 
     # Assert: Correct number of pizza_types in database after deletion
