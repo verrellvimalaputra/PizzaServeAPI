@@ -20,6 +20,10 @@ def test_beverage_create_read_delete(db):
     new_beverage_description = 'Pepsi'
     new_beverage_stock = 10
     number_of_beverages_before = len(beverage_crud.get_all_beverages(db))
+    update_beverage_name = 'Cola'
+    update_beverage_price = 8.5
+    update_beverage_description = 'Cola'
+    update_beverage_stock = 25
 
     # Arrange: Instantiate a new beverage object
     beverage = BeverageCreateSchema(name=new_beverage_name,
@@ -27,7 +31,12 @@ def test_beverage_create_read_delete(db):
                                     description=new_beverage_description,
                                     stock=new_beverage_stock)
 
-    # # Act: Add beverage to database
+    updated_beverage = BeverageCreateSchema(name=update_beverage_name,
+                                            price=update_beverage_price,
+                                            description=update_beverage_description,
+                                            stock=update_beverage_stock)
+
+    # Act: Add beverage to database
     db_beverage = beverage_crud.create_beverage(beverage, db)
     created_beverage_id = db_beverage.id
 
@@ -41,6 +50,14 @@ def test_beverage_create_read_delete(db):
     # Assert: Correct beverage was stored in database
     assert read_beverage.id == created_beverage_id
     assert read_beverage.name == new_beverage_name
+
+    # Act: Update beverage
+    beverage_crud.update_beverage(read_beverage, updated_beverage, db)
+
+    read_updated_beverage = beverage_crud.get_beverage_by_name(update_beverage_name, db)
+
+    # Assert: Correct beverage name was updated
+    assert read_updated_beverage == read_beverage
 
     # Act: Delete beverage
     beverage_crud.delete_beverage_by_id(created_beverage_id, db)
