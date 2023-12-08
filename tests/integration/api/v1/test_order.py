@@ -56,8 +56,10 @@ def test_order_create_read_delete(db):
     created_user_id = db_user.id
 
     order = OrderCreateSchema(address=AddressCreateSchema(street=new_street, post_code=new_post_code,
-                              house_number=new_house_number, country=new_country, town=new_town,
-                              first_name=new_first_name, last_name=new_last_name), user_id=created_user_id)
+                                                          house_number=new_house_number, country=new_country,
+                                                          town=new_town,
+                                                          first_name=new_first_name, last_name=new_last_name),
+                              user_id=created_user_id)
 
     dough = DoughCreateSchema(name=new_dough_name, price=new_dough_price,
                               description=new_dough_description, stock=new_dough_stock)
@@ -100,8 +102,7 @@ def test_order_create_read_delete(db):
 
     # Act: Add beverage to order
     beverage_order = order_crud.create_beverage_quantity(
-        db_order, OrderBeverageQuantityCreateSchema(quantity=6, beverage_id=created_beverage_id), db
-    )
+        db_order, OrderBeverageQuantityCreateSchema(quantity=6, beverage_id=created_beverage_id), db)
 
     # Assert: Correct beverage was added to order
     beverage_order_id = beverage_order.beverage_id
