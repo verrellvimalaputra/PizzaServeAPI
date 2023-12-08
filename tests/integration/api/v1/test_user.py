@@ -18,8 +18,11 @@ def test_user_create_read_delete(db):
     new_user_name = 'test'
     number_of_users_before = len(user_crud.get_all_users(db))
 
+    updated_user_name = 'test2'
+
     # Arrange: Instantiate a new user object
     user = UserCreateSchema(username=new_user_name)
+    updated_user = UserCreateSchema(username=updated_user_name)
 
     # Act: Add user to database
     db_user = user_crud.create_user(user, db)
@@ -35,6 +38,13 @@ def test_user_create_read_delete(db):
     # Assert: Correct user was stored in database
     assert read_user.id == created_user_id
     assert read_user.username == new_user_name
+
+    # Act: Update user
+    user_crud.update_user(read_user, updated_user, db)
+    read_updated_user = user_crud.get_user_by_username(updated_user_name, db)
+
+    # Assert:
+    assert read_updated_user == read_user
 
     # Act: Delete user
     user_crud.delete_user_by_id(created_user_id, db)
