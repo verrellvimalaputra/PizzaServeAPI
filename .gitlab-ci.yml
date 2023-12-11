@@ -294,6 +294,24 @@ integration_testing:
     - main
     - master  
 
+service_testing:
+  stage: commit
+  image: 
+    name: $CI_REGISTRY_IMAGE/$DEVELOPMENT_CONTAINER_NAME:$DEVELOPMENT_CONTAINER_TAG
+    entrypoint: [""]
+  needs:
+    - create_development_container_image
+  variables:
+    API_SERVER: 'http://hahn-do2-blue.se-ws23.users.h-da.cloud:30080/docs' # insert link to your API website
+    API_PORT: 8000  # insert port of your API website
+  script:
+    - PYTHONPATH=. pytest --pspec --verbose --color=yes --junitxml=report_service_tests.xml tests/service/
+  allow_failure: false
+  only:
+    - branches
+    - merge_requests
+    - main
+    - master  
 
 
 
