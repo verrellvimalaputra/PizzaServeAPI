@@ -300,7 +300,7 @@ service_testing:
     name: $CI_REGISTRY_IMAGE/$DEVELOPMENT_CONTAINER_NAME:$DEVELOPMENT_CONTAINER_TAG
     entrypoint: [""]
   needs:
-    - create_development_container_image
+    - migrate_database_in_staging
   variables:
     API_SERVER: 'http://hahn-do2-blue.se-ws23.users.h-da.cloud' # insert link to your API website
     API_PORT: 30080  # insert port of your API website
