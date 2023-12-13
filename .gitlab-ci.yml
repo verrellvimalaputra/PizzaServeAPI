@@ -302,7 +302,7 @@ service_testing:
   needs:
     - migrate_database_in_staging
   variables:
-    API_SERVER: 'http://hahn-do2-blue.se-ws23.users.h-da.cloud' # insert link to your API website
+    API_SERVER: $team_instance_link # insert link to your API website
     API_PORT: 30080  # insert port of your API website
   script:
     - PYTHONPATH=. pytest --pspec --verbose --color=yes --junitxml=report_service_tests.xml tests/service/
