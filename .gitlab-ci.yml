@@ -308,7 +308,6 @@ service_testing:
     - PYTHONPATH=. pytest --pspec --verbose --color=yes --junitxml=report_service_tests.xml tests/service/
   allow_failure: false
   only:
-    - branches
     - merge_requests
     - main
     - master  
