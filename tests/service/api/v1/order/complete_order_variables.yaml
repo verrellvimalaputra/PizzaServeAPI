@@ -26,6 +26,7 @@ variables:
     beverage_price: 4.00
     beverage_description: "Coca Cola"
     beverage_stock: 20
+    username: "Lab Engineer"
 
 
 
