@@ -40,6 +40,8 @@ variables:
     address_town: "Darmstadt"
     address_first_name: "Ralf"
     address_last_name: "Hahn"
+
+    order_beverage_quantity: 1
     
 
 
