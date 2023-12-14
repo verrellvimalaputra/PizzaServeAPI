@@ -105,9 +105,37 @@ stages:
       json:
         <<: *ham_pizza_spectacle_topping_quantity
 
+  - name: Create the test beverage
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/beverages
+      json:
+        name: "{beverage_name:s}"
+        price: !float "{beverage_price:f}"
+        description: "{beverage_description}"
+        stock: !int "{beverage_stock:d}"
+      method: POST
+    response:
+        status_code: 201
+        json:
+          name: "{beverage_name:s}"
+          price: !float "{beverage_price:f}"
+          description: "{beverage_description}"
+          stock: !int "{beverage_stock:d}"
+          id: !anything
+        save:
+          json:
+            beverage_id: id
 
 
 #---------------------Delete Everything-----------------------------------
+  #Delete beverage
+  - name: Delete beverage with id
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/beverages/{beverage_id}
+      method: DELETE
+    response:
+      status_code: 204
+
   #Delete Pizza_type
   - name: Delete pizza_type with id
     request:
