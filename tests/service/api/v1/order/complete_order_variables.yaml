@@ -1,0 +1,11 @@
+---
+
+name: Common
+
+description: common test information
+
+variables:
+    dough_name: "Neapolitan"
+    dough_price: 5.20
+    dough_description: "Neapolitan Dough"
+    dough_stock: 10
