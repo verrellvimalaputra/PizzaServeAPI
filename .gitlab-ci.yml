@@ -294,7 +294,23 @@ integration_testing:
     - main
     - master  
 
-
+service_testing:
+  stage: acceptance
+  image: 
+    name: $CI_REGISTRY_IMAGE/$DEVELOPMENT_CONTAINER_NAME:$DEVELOPMENT_CONTAINER_TAG
+    entrypoint: [""]
+  needs:
+    - migrate_database_in_staging
+  variables:
+    API_SERVER: $team_instance_link # insert link to your API website
+    API_PORT: 30080  # insert port of your API website
+  script:
+    - PYTHONPATH=. pytest --pspec --verbose --color=yes --junitxml=report_service_tests.xml tests/service/
+  allow_failure: false
+  only:
+    - merge_requests
+    - main
+    - master  
 
 
 
