@@ -43,6 +43,24 @@ stages:
         json:
           topping1_id: id
 
+  - name: Create the topping2
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/toppings
+      json: &ham_topping
+        name: "{topping2_name:s}"
+        price: !float "{topping2_price:f}"
+        description: "{topping2_description}"
+        stock: !int "{topping2_stock:d}"
+      method: POST
+    response:
+      status_code: 201
+      json:
+        <<: *ham_topping
+        id: !anything
+      save:
+        json:
+          topping2_id: id
+
 
 
 
@@ -53,6 +71,14 @@ stages:
 
 
 #---------------------Delete Everything-----------------------------------
+  #Delete Topping 2
+  - name: Delete topping2 with id
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/toppings/{topping2_id}
+      method: DELETE
+    response:
+      status_code: 204
+
   #Delete Topping 1
   - name: Delete topping1 with id
     request:
