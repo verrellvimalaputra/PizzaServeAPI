@@ -171,7 +171,32 @@ stages:
           order_id: id
           datetime: order_datetime
           order_status: status
+      
+  - name: Add Pizza to Order and verify 200 status code
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/order/{order_id}/pizzas
+      method: POST
+      json:
+        pizza_type_id: "{pizza_type_id}"
+    response:
+      status_code: 200
+      json:
+        id: !anything
+      save:
+        json:
+          pizza_id: id
 
+  - name: verify that status code equals 201 and the quantity and beverage_id is returned when we create a beverage order relation (add a beverage to an order)
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/order/{order_id}/beverages
+      json: &order_cola_beverage_quantity
+        quantity: !int "{order_beverage_quantity:d}"
+        beverage_id: "{beverage_id}"
+      method: POST
+    response:
+      status_code: 201
+      json:
+        <<: *order_cola_beverage_quantity
 
 #---------------------Delete Everything-----------------------------------
   #Delete Order
