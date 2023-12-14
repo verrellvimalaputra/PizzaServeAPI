@@ -29,10 +29,10 @@ stages:
     request:
       url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/toppings
       json: &cheese_topping
-        name: "{topping_name1:s}"
-        price: !float "{topping_price1:f}"
-        description: "{topping_description1}"
-        stock: !int "{topping_stock1:d}"
+        name: "{topping1_name:s}"
+        price: !float "{topping1_price:f}"
+        description: "{topping1_description}"
+        stock: !int "{topping1_stock:d}"
       method: POST
     response:
       status_code: 201
