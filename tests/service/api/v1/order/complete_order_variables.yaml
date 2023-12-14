@@ -9,3 +9,13 @@ variables:
     dough_price: 5.20
     dough_description: "Neapolitan Dough"
     dough_stock: 10
+    topping1_name: "Fungi"
+    topping1_price: 1.20
+    topping1_description: "Fungi"
+    topping1_stock: 10
+    topping2_name: "Ham"
+    topping2_price: 2.20
+    topping2_description: "Ham"
+    topping2_stock: 10
+
+
