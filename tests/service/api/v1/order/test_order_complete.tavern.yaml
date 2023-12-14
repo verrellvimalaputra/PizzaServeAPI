@@ -12,9 +12,6 @@ variables:
 stages:
 
   - name: Verify that status code equals 201 when we create a new dough and the dough is returned
-    # max_retries and delay_after needs to be set in first stage of each stage to wait for uvicorn
-    max_retries: 10
-    delay_after: 2
     request:
       url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/doughs
       json: &dough
@@ -43,7 +40,7 @@ stages:
 
 #---------------------Delete Everything-----------------------------------
   #Delete Dough
-  - name: Delete first created dough with id
+  - name: Delete created dough with id
     request:
       url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/doughs/{dough_id}
       method: DELETE
