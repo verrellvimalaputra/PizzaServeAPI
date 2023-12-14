@@ -61,7 +61,7 @@ stages:
         json:
           topping2_id: id
 
-  - name: create the test pizza_type
+  - name: Create the pizza_type
     request:
       url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types
       json:
@@ -80,6 +80,31 @@ stages:
       save:
         json:
           pizza_type_id: id
+
+  - name: Create a topping pizza_type relation
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}/toppings
+      json: &salami_pizza_salami_topping_quantity
+        quantity: !int "{quantity1:d}"
+        topping_id: "{topping1_id}"
+      method: POST
+    response:
+      status_code: 201
+      json:
+        <<: *salami_pizza_salami_topping_quantity
+
+  - name: Create a second topping pizza_type relation
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}/toppings
+      json: &salami_pizza_salami_topping_quantity
+        quantity: !int "{quantity2:d}"
+        topping_id: "{topping2_id}"
+      method: POST
+    response:
+      status_code: 201
+      json:
+        <<: *salami_pizza_salami_topping_quantity
+
 
 
 #---------------------Delete Everything-----------------------------------
