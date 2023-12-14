@@ -2,12 +2,8 @@
 
 test_name: Make sure server implements crud functionality for order endpoint
 
-variables:
-  dough_name: "Neapolitan"
-  dough_price: 5.20
-  dough_description: "Neapolitan Dough"
-  dough_stock: 10
-
+includes:
+  - !include complete_order_variables.yaml
 
 stages:
 
