@@ -107,7 +107,7 @@ stages:
       url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/beverages/{beverage_id}
       method: PUT
       json:
-        <<: *beverage
+        <<: *cola_beverage
         name: "Sprite"
     response:
       status_code: 303
@@ -121,7 +121,7 @@ stages:
       url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/beverages/00000000-0000-0000-0000-000000000000
       method: PUT
       json:
-        <<: *beverage
+        <<: *cola_beverage
         name: "Sprite"
     response:
       status_code: 404
