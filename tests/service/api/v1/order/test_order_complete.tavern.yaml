@@ -2,45 +2,36 @@
 
 test_name: Make sure server implements crud functionality for order endpoint
 
-includes:
-  - !include common.yaml
-  - !include ../order/order_stage.yaml
-  - !include ../dough/dough_stage.yaml
-  - !include ../pizza_type/pizza_type_stage.yaml
-  - !include ../users/user_stage.yaml
-  - !include ../beverages/beverage_stage.yaml
-  - !include ../toppings/topping_stage.yaml
+variables:
+  dough_name: "Neapolitan"
+  dough_price: 5.20
+  dough_description: "Neapolitan Dough"
+  dough_stock: 10
 
 
 stages:
 
- #Create Dough
-  - type: ref
-    id: create_dough
+  - name: Verify that status code equals 201 when we create a new dough and the dough is returned
+    # max_retries and delay_after needs to be set in first stage of each stage to wait for uvicorn
+    max_retries: 10
+    delay_after: 2
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/doughs
+      json: &dough
+        name: "{dough_name:s}"
+        price: !float "{dough_price:f}"
+        description: "{dough_description}"
+        stock: !int "{dough_stock:d}"
+      method: POST
+    response:
+      status_code: 201
+      json:
+        <<: *dough
+        id: !anything
+      save:
+        json:
+          dough_id: id
 
-#Create Topping1
-  - type: ref
-    id: create_topping1
-
-#Create Topping2
-  - type: ref
-    id: create_topping2
-
-#Create Pizza_Type
-  - type: ref
-    id: create_pizza_type    
-
-#Create Beverage
-  - type: ref
-    id: create_beverage 
-
-#Create Order
-  - type: ref
-    id: create_order
-
-#Create User
-  - type: ref
-    id: create_user
 
 
 
@@ -52,32 +43,12 @@ stages:
 
 #---------------------Delete Everything-----------------------------------
   #Delete Dough
-  - type: ref
-    id: delete_dough
-
-  #Delete Topping1
-  - type: ref
-    id: delete_topping1
-
-#Delete Topping2
-  - type: ref
-    id: delete_topping2
-
-#Delete pizza_type
-  - type: ref
-    id: delete_pizza_type
-
-#Delete beverage
-  - type: ref
-    id: delete_beverage
-
- #Delete Order
-  - type: ref
-    id: delete_order  
-
-  #Delete user
-  - type: ref
-    id: delete_user
+  - name: Delete first created dough with id
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/doughs/{dough_id}
+      method: DELETE
+    response:
+      status_code: 204
 
 
 
