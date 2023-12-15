@@ -1,0 +1,262 @@
+---
+
+test_name: Make sure server implements crud functionality for order endpoint
+
+includes:
+  - !include complete_order_variables.yaml
+
+stages:
+
+  - name: Verify that status code equals 201 when we create a new dough and the dough is returned
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/doughs
+      json: &dough
+        name: "{dough_name:s}"
+        price: !float "{dough_price:f}"
+        description: "{dough_description}"
+        stock: !int "{dough_stock:d}"
+      method: POST
+    response:
+      status_code: 201
+      json:
+        <<: *dough
+        id: !anything
+      save:
+        json:
+          dough_id: id
+
+  - name: Create the topping1
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/toppings
+      json: &fungi_topping
+        name: "{topping1_name:s}"
+        price: !float "{topping1_price:f}"
+        description: "{topping1_description}"
+        stock: !int "{topping1_stock:d}"
+      method: POST
+    response:
+      status_code: 201
+      json:
+        <<: *fungi_topping
+        id: !anything
+      save:
+        json:
+          topping1_id: id
+
+  - name: Create the topping2
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/toppings
+      json: &ham_topping
+        name: "{topping2_name:s}"
+        price: !float "{topping2_price:f}"
+        description: "{topping2_description}"
+        stock: !int "{topping2_stock:d}"
+      method: POST
+    response:
+      status_code: 201
+      json:
+        <<: *ham_topping
+        id: !anything
+      save:
+        json:
+          topping2_id: id
+
+  - name: Create the pizza_type
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types
+      json:
+        name: "{pizza_name:s}"
+        price: !float "{pizza_price:f}"
+        description: "{pizza_description}"
+        dough_id: "{dough_id}"
+      method: POST
+    response:
+      status_code: 201
+      json:
+        name: "{pizza_name:s}"
+        price: !float "{pizza_price:f}"
+        description: "{pizza_description}"
+        id: !anything
+      save:
+        json:
+          pizza_type_id: id
+
+  - name: Create a topping pizza_type relation
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}/toppings
+      json: &fungi_pizza_spectacle_topping_quantity
+        quantity: !int "{quantity1:d}"
+        topping_id: "{topping1_id}"
+      method: POST
+    response:
+      status_code: 201
+      json:
+        <<: *fungi_pizza_spectacle_topping_quantity
+
+  - name: Create a second topping pizza_type relation
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}/toppings
+      json: &ham_pizza_spectacle_topping_quantity
+        quantity: !int "{quantity2:d}"
+        topping_id: "{topping2_id}"
+      method: POST
+    response:
+      status_code: 201
+      json:
+        <<: *ham_pizza_spectacle_topping_quantity
+
+  - name: Create the test beverage
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/beverages
+      json:
+        name: "{beverage_name:s}"
+        price: !float "{beverage_price:f}"
+        description: "{beverage_description}"
+        stock: !int "{beverage_stock:d}"
+      method: POST
+    response:
+        status_code: 201
+        json:
+          name: "{beverage_name:s}"
+          price: !float "{beverage_price:f}"
+          description: "{beverage_description}"
+          stock: !int "{beverage_stock:d}"
+          id: !anything
+        save:
+          json:
+            beverage_id: id
+
+  - name: Create test user
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/users
+      json:
+        username: "{username:s}"
+      method: POST
+    response:
+      status_code: 201
+      json:
+        username: "{username:s}"
+        id: !anything
+      save:
+        json:
+          user_id: id
+
+  - name: create the test order
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/order
+      method: POST
+      json:
+        user_id: "{user_id}"
+        address: &address
+          street: "{address_street:s}"
+          post_code: "{address_post_code:s}"
+          house_number: !int "{address_house_number:d}"
+          country: "{address_country:s}"
+          town: "{address_town:s}"
+          first_name: "{address_first_name:s}"
+          last_name: "{address_last_name:s}"
+    response:
+      status_code: 201
+      json:
+        order_datetime: !anything
+        id: !anything
+        user_id: !anything
+        address:
+          <<: *address
+          id: !anything
+        order_status: !anything
+      save:
+        json:
+          address_id: address.id
+          order_id: id
+          datetime: order_datetime
+          order_status: status
+      
+  - name: Add Pizza to Order and verify 200 status code
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/order/{order_id}/pizzas
+      method: POST
+      json:
+        pizza_type_id: "{pizza_type_id}"
+    response:
+      status_code: 200
+      json:
+        id: !anything
+      save:
+        json:
+          pizza_id: id
+
+  - name: verify that status code equals 201 and the quantity and beverage_id is returned when we create a beverage order relation (add a beverage to an order)
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/order/{order_id}/beverages
+      json: &order_cola_beverage_quantity
+        quantity: !int "{order_beverage_quantity:d}"
+        beverage_id: "{beverage_id}"
+      method: POST
+    response:
+      status_code: 201
+      json:
+        <<: *order_cola_beverage_quantity
+
+#---------------------Delete Everything-----------------------------------
+  #Delete Order
+  - name: Delete order with id
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/order/{order_id}
+      method: DELETE
+    response:
+      status_code: 204
+
+  #Delete User
+  - name: Delete test user
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/users/{user_id}
+      method: DELETE
+    response:
+      status_code: 204
+
+  #Delete beverage
+  - name: Delete beverage with id
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/beverages/{beverage_id}
+      method: DELETE
+    response:
+      status_code: 204
+
+  #Delete Pizza_type
+  - name: Delete pizza_type with id
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}
+      method: DELETE
+    response:
+      status_code: 204
+
+  #Delete Topping 2
+  - name: Delete topping2 with id
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/toppings/{topping2_id}
+      method: DELETE
+    response:
+      status_code: 204
+
+  #Delete Topping 1
+  - name: Delete topping1 with id
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/toppings/{topping1_id}
+      method: DELETE
+    response:
+      status_code: 204
+  
+  #Delete Dough
+  - name: Delete created dough with id
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/doughs/{dough_id}
+      method: DELETE
+    response:
+      status_code: 204
+  
+
+
+
+
+

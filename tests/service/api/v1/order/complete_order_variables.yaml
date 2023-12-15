@@ -1,0 +1,49 @@
+---
+
+name: Common
+
+description: common test information
+
+variables:
+    dough_name: "Neapolitan"
+    dough_price: 5.20
+    dough_description: "Neapolitan Dough"
+    dough_stock: 10
+
+    topping1_name: "Fungi"
+    topping1_price: 1.20
+    topping1_description: "Fungi"
+    topping1_stock: 10
+    quantity1: 5
+    
+    topping2_name: "Ham"
+    topping2_price: 2.20
+    topping2_description: "Ham"
+    topping2_stock: 10
+    quantity2: 3
+    
+    pizza_name: "Pizza Speciale"
+    pizza_price: 11.50
+    pizza_description: "Pizza Speciale"
+    
+    beverage_name: "Coca Cola"
+    beverage_price: 4.00
+    beverage_description: "Coca Cola"
+    beverage_stock: 20
+    
+    username: "Lab Engineer"
+
+    address_street: "Birkenweg"
+    address_post_code: "64295"
+    address_house_number: 7
+    address_country: "Germany"
+    address_town: "Darmstadt"
+    address_first_name: "Ralf"
+    address_last_name: "Hahn"
+
+    order_beverage_quantity: 1
+    
+
+
+
+
