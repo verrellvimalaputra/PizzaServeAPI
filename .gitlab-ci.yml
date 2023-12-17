@@ -74,7 +74,7 @@ flake8_checking:
     entrypoint: [ "" ]
   script:
     - flakeheaven lint app/ tests/
-  allow_failure: true
+  allow_failure: false
   only:
     - branches
     - merge_requests
@@ -92,6 +92,7 @@ create_release_candidate:
     CONTAINER_NAME: $RELEASE_CONTAINER_NAME
     TAG_NAME: $RELEASE_CONTAINER_TAG
     CREATE_LATEST_TAG: 'true'
+  allow_failure: false
   only:
     - merge_requests
     - main
@@ -118,6 +119,7 @@ deploy_application_to_staging:
     - kubectl apply -f final-deployment-staging.yaml --kubeconfig=final-kubeconfig
     - rm final-deployment-staging.yaml
     - rm final-kubeconfig
+  allow_failure: false
   only:
     refs:
       - main
@@ -139,6 +141,7 @@ smoke_testing_staging:
   script:
     - chmod +x $CI_PROJECT_DIR/infra/build_artifacts/smoke.sh
     - $CI_PROJECT_DIR/infra/build_artifacts/smoke.sh
+  allow_failure: false
   only:
     - merge_requests
     - main
@@ -161,6 +164,7 @@ migrate_database_in_staging:
     - export POD_NAME=`kubectl --kubeconfig=final-kubeconfig get pods --namespace staging --no-headers -l app=stagingcontainer -o custom-columns=":metadata.name"`
     - kubectl --kubeconfig=final-kubeconfig exec $POD_NAME --namespace staging -- env PYTHONPATH=. alembic upgrade head
     - rm final-kubeconfig
+  allow_failure: false
   only:
     refs:
       - main
@@ -184,6 +188,7 @@ deploy_application_to_production:
     - kubectl apply -f final-deployment-production.yaml --kubeconfig=final-kubeconfig
     - rm final-deployment-production.yaml
     - rm final-kubeconfig
+  allow_failure: false
   only:
     refs:
       - main
@@ -204,6 +209,7 @@ smoke_testing_production:
   script:
     - chmod +x $CI_PROJECT_DIR/infra/build_artifacts/smoke.sh
     - $CI_PROJECT_DIR/infra/build_artifacts/smoke.sh
+  allow_failure: false
   only:
     - main
     - master
@@ -225,6 +231,7 @@ migrate_database_in_production:
     - export POD_NAME=`kubectl --kubeconfig=final-kubeconfig get pods --namespace production --no-headers -l app=productioncontainer -o custom-columns=":metadata.name"`
     - kubectl --kubeconfig=final-kubeconfig exec $POD_NAME --namespace production -- env PYTHONPATH=. alembic upgrade head
     - rm final-kubeconfig
+  allow_failure: false
   only:
     refs:
       - main
@@ -248,7 +255,7 @@ sonarqube-check:
       - .sonar/cache
   script: 
     - sonar-scanner
-  allow_failure: true
+  allow_failure: false
   only:
     - merge_requests
     - main
