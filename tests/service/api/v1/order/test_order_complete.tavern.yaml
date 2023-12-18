@@ -6,7 +6,7 @@ includes:
   - !include complete_order_variables.yaml
 
 stages:
-
+  
   - name: Create a new dough 
     request:
       url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/doughs
@@ -171,14 +171,6 @@ stages:
           order_id: id
           datetime: order_datetime
           order_status: status
-
-  #Get wrong Order
-  - name: Check for status 404 if we try to get an order with a wrong id
-    request:
-      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/order/{not_available_id}
-      method: GET
-    response:
-      status_code: 404
       
   - name: Add Pizza to Order and verify 200 status code
     request:
@@ -205,6 +197,43 @@ stages:
       status_code: 201
       json:
         <<: *order_cola_beverage_quantity
+
+#---------------------Edge Cases-----------------------------------
+  #Get wrong Order
+  - name: Check for status 404 if we try to get an order with a wrong id
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/order/{not_available_id}
+      method: GET
+    response:
+      status_code: 404
+
+  #Add Pizza to not existing Order
+  - name: Add pizza with right pizza_type_id to non existing order and verify 404 status code
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/order/{not_available_id}/pizzas
+      method: POST
+      json:
+        pizza_type_id: "{pizza_type_id}"
+    response:
+      status_code: 404
+
+  #Get Pizza from wrong Order
+  - name: Get Pizzas from wrong Order and verify status code 404
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/order/{not_available_id}/pizzas
+      method: GET
+    response:
+      status_code: 404
+
+  #Delete Pizza from wrong Order
+  - name: Delete pizza with existing id from non existing order and verify 404 status code
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/order/{not_available_id}/pizzas
+      method: DELETE
+      json:
+        id: "{pizza_id}"
+    response:
+      status_code: 404
 
   #Add Beverage to not existing Order
   - name: verify that status code equals 404 when trying to add a beverage to a not existing order
