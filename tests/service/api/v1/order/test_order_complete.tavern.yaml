@@ -175,7 +175,7 @@ stages:
     #Get wrong Order
   - name: Check for status 404 if we try to get an order with a wrong id
     request:
-      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/order/0000
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/order/{not_available_id}
       method: GET
     response:
       status_code: 404
