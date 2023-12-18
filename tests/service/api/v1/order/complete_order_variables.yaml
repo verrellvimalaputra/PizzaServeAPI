@@ -5,6 +5,7 @@ name: Common
 description: common test information
 
 variables:
+    not_available_id: "00000000-0000-0000-0000-000000000000"
     dough_name: "Neapolitan"
     dough_price: 5.20
     dough_description: "Neapolitan Dough"
