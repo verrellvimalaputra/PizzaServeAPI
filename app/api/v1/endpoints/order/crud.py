@@ -27,6 +27,16 @@ def get_order_by_id(order_id: uuid.UUID, db: Session):
     return entity
 
 
+def get_all_order_by_status(order_status: OrderStatus, db: Session):
+    entities = db.query(Order).filter(Order.order_status == order_status)
+    return_list = []
+
+    for order in entities.all():
+        return_list.append(order)
+
+    return return_list
+
+
 def get_all_orders(db: Session):
     entities = db.query(Order).all()
     return entities
