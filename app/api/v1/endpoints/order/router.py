@@ -15,7 +15,7 @@ import app.api.v1.endpoints.user.crud as user_crud
 from app.api.v1.endpoints.order.schemas \
     import OrderSchema, PizzaCreateSchema, JoinedPizzaPizzaTypeSchema, \
     PizzaWithoutPizzaTypeSchema, OrderBeverageQuantityCreateSchema, JoinedOrderBeverageQuantitySchema, \
-    OrderPriceSchema, OrderBeverageQuantityBaseSchema, OrderCreateSchema
+    OrderPriceSchema, OrderBeverageQuantityBaseSchema, OrderCreateSchema, OrderStatus
 from app.api.v1.endpoints.user.schemas import UserSchema
 from app.database.connection import SessionLocal
 
@@ -97,6 +97,14 @@ def get_order(
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
     return order
+
+
+@router.get('/status/{order_status}', response_model=List[OrderSchema], tags=['order'])
+def get_all_order_by_status(
+        order_status: OrderStatus,
+        db: Session = Depends(get_db)):
+    orders = order_crud.get_all_order_by_status(order_status, db)
+    return orders
 
 
 @router.delete('/{order_id}', response_model=None, tags=['order'])
