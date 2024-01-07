@@ -107,6 +107,41 @@ def get_all_order_by_status(
     return orders
 
 
+@router.put('/{order_id}', response_model=OrderSchema, tags=['order'])
+def update_order_status_by_id(
+        order_id: uuid.UUID,
+        order_status: str,
+        db: Session = Depends(get_db)):
+    order = order_crud.get_order_by_id(order_id, db)
+    if not order:
+        logging.error(ORDER_NOT_FOUND.format(order_id))
+        return Response(status_code=status.HTTP_404_NOT_FOUND)
+
+    try:
+        new_order_status = OrderStatus(order_status)
+    except ValueError:
+        return Response(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+    if order.order_status == new_order_status:
+        order_crud.update_order_status(order, OrderStatus(order_status), db)
+        return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+    if order.order_status == OrderStatus.TRANSMITTED and new_order_status == OrderStatus.PREPARING:
+        order_crud.update_order_status(order, OrderStatus(order_status), db)
+        logging.info('Order {} status is now PREPARING'.format(order_id))
+        return Response(status_code=status.HTTP_204_NO_CONTENT)
+    elif order.order_status == OrderStatus.PREPARING and new_order_status == OrderStatus.IN_DELIVERY:
+        order_crud.update_order_status(order, OrderStatus(order_status), db)
+        logging.info('Order {} status is now IN_DELIVERY'.format(order_id))
+        return Response(status_code=status.HTTP_204_NO_CONTENT)
+    elif order.order_status == OrderStatus.IN_DELIVERY and new_order_status == OrderStatus.COMPLETED:
+        order_crud.update_order_status(order, OrderStatus(order_status), db)
+        logging.info('Order {} status is now COMPLETED'.format(order_id))
+        return Response(status_code=status.HTTP_204_NO_CONTENT)
+    else:
+        return Response(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+
 @router.delete('/{order_id}', response_model=None, tags=['order'])
 def delete_order(
         order_id: uuid.UUID,
