@@ -118,18 +118,18 @@ def update_order_status_by_id(
         logging.error(ORDER_NOT_FOUND.format(order_id))
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
-    if (OrderStatus(order_status) is not OrderStatus.TRANSMITTED
-        and OrderStatus(order_status) is not OrderStatus.PREPARING) \
-            and OrderStatus(order_status) is not OrderStatus.IN_DELIVERY \
-            and OrderStatus(order_status) is not OrderStatus.COMPLETED:
+    if (OrderStatus(order_status) is not OrderStatus.TRANSMITTED and
+            OrderStatus(order_status) is not OrderStatus.PREPARING and
+            OrderStatus(order_status) is not OrderStatus.IN_DELIVERY and
+            OrderStatus(order_status) is not OrderStatus.COMPLETED):
         return Response(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
-    if (OrderStatus(order.order_status) is OrderStatus.TRANSMITTED
-        and OrderStatus(order_status) is OrderStatus.PREPARING) \
-            or (OrderStatus(order.order_status) is OrderStatus.PREPARING
-                and OrderStatus(order_status) is OrderStatus.IN_DELIVERY) \
-            or (OrderStatus(order.order_status) is OrderStatus.IN_DELIVERY
-                and OrderStatus(order_status) is OrderStatus.COMPLETED):
+    if ((OrderStatus(order.order_status) is OrderStatus.TRANSMITTED and
+         OrderStatus(order_status) is OrderStatus.PREPARING) or
+            (OrderStatus(order.order_status) is OrderStatus.PREPARING and
+             OrderStatus(order_status) is OrderStatus.IN_DELIVERY) or
+            (OrderStatus(order.order_status) is OrderStatus.IN_DELIVERY and
+             OrderStatus(order_status) is OrderStatus.COMPLETED)):
         order_crud.update_order_status(order, OrderStatus(order_status), db)
         return Response(status_code=status.HTTP_204_NO_CONTENT)
     else:
