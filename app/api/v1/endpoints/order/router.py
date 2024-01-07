@@ -117,7 +117,11 @@ def update_order_status_by_id(
         logging.error(ORDER_NOT_FOUND.format(order_id))
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
+    if any(order_status != member.value for member in OrderStatus):
+        return Response(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
     new_order_status = OrderStatus(order_status)
+
     if order.order_status == new_order_status:
         order_crud.update_order_status(order, OrderStatus(order_status), db)
         return Response(status_code=status.HTTP_204_NO_CONTENT)
