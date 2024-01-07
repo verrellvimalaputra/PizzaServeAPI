@@ -118,8 +118,6 @@ def update_order_status_by_id(
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
     new_order_status = OrderStatus(order_status)
-    print(new_order_status)
-    print(order.order_status)
     if order.order_status == new_order_status:
         order_crud.update_order_status(order, OrderStatus(order_status), db)
         return Response(status_code=status.HTTP_204_NO_CONTENT)
