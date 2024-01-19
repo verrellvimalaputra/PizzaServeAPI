@@ -85,23 +85,23 @@ stages:
     response:
       status_code: 204
 
-#  - name: Check if a new sauce is created when sauce gets a new name and name does not already exists
-#    request:
-#      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/sauces/{sauce_id}
-#      method: PUT
-#      json:
-#        <<: *sauce
-#        name: "Italian Style"
-#    response:
-#      status_code: 201
-#      json:
-#        <<: *sauce
-#        id: !anything
-#        name: "Italian Style"
-#      save:
-#        json:
-#          italian_id: id
-#
+  - name: Check if a new sauce is created when sauce gets a new name and name does not already exists
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/sauces/{sauce_id}
+      method: PUT
+      json:
+        <<: *sauce
+        name: "Italian Style"
+    response:
+      status_code: 201
+      json:
+        <<: *sauce
+        id: !anything
+        name: "Italian Style"
+      save:
+        json:
+          italian_id: id
+
 #  - name: Check for status 303 if we update sauce to an already existing name
 #    request:
 #      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/sauces/{sauce_id}
@@ -140,11 +140,11 @@ stages:
       method: DELETE
     response:
       status_code: 204
-#  #Delete Sauce
-#  - name: Delete second created sauce with id
-#    request:
-#      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/sauces/{italian_id}
-#      method: DELETE
-#    response:
-#      status_code: 204
+  #Delete Sauce
+  - name: Delete second created sauce with id
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/sauces/{italian_id}
+      method: DELETE
+    response:
+      status_code: 204
 
