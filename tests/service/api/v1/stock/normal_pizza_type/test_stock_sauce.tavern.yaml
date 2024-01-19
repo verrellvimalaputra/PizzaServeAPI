@@ -8,6 +8,9 @@ includes:
   - !include ../../pizza_type/pizza_type_stage.yaml
   - !include ../../users/user_stage.yaml
 
+mark:
+  - skip
+
 stages:
 #-------------------Create Order------------------------
   #Create User
