@@ -192,60 +192,60 @@ stages:
         json:
           topping_id: id
 
-#  - name: verify that status code equals 201 and the quantity and topping_id is returned when we create a topping pizza_type relation (put a topping on a pizza)
-#    request:
-#      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}/toppings
-#      json: &salami_pizza_salami_topping_quantity
-#        quantity: !int "{quantity:d}"
-#        topping_id: "{topping_id}"
-#      method: POST
-#    response:
-#      status_code: 201
-#      json:
-#        <<: *salami_pizza_salami_topping_quantity
-#
-#  - name: verify that status code equals 404 when trying to add a topping to a non-existent pizza type
-#    request:
-#      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{not_available_id}/toppings
-#      json:
-#        quantity: !int "{quantity:d}"
-#        topping_id: "{topping_id}"
-#      method: POST
-#    response:
-#      status_code: 404
-#
-#  - name: verify that status code equals 404  when trying to add a non-existent topping to a pizza type
-#    request:
-#      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}/toppings
-#      json:
-#        quantity: !int "{quantity:d}"
-#        topping_id: "{not_available_id}"
-#      method: POST
-#    response:
-#      status_code: 404
-#
-#
-#  - name: verify that status code equals 303 and get a redirect when we try to create a topping pizza_type relation which already exists
-#    request:
-#      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}/toppings
-#      json:
-#        quantity: !int "{quantity:d}"
-#        topping_id: "{topping_id}"
-#      method: POST
-#    response:
-#      status_code: 303
-#      headers:
-#        location: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}/toppings
-#
-#  - name: verify that we get status code 200 and all toppings for a pizza
-#    request:
-#      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}/toppings
-#      method: GET
-#    response:
-#      status_code: 200
-#      json:
-#        - *salami_pizza_salami_topping_quantity
-#
+  - name: verify that status code equals 201 and the quantity and topping_id is returned when we create a topping pizza_type relation (put a topping on a pizza)
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}/toppings
+      json: &salami_pizza_salami_topping_quantity
+        quantity: !int "{quantity:d}"
+        topping_id: "{topping_id}"
+      method: POST
+    response:
+      status_code: 201
+      json:
+        <<: *salami_pizza_salami_topping_quantity
+
+  - name: verify that status code equals 404 when trying to add a topping to a non-existent pizza type
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{not_available_id}/toppings
+      json:
+        quantity: !int "{quantity:d}"
+        topping_id: "{topping_id}"
+      method: POST
+    response:
+      status_code: 404
+
+  - name: verify that status code equals 404  when trying to add a non-existent topping to a pizza type
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}/toppings
+      json:
+        quantity: !int "{quantity:d}"
+        topping_id: "{not_available_id}"
+      method: POST
+    response:
+      status_code: 404
+
+
+  - name: verify that status code equals 303 and get a redirect when we try to create a topping pizza_type relation which already exists
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}/toppings
+      json:
+        quantity: !int "{quantity:d}"
+        topping_id: "{topping_id}"
+      method: POST
+    response:
+      status_code: 303
+      headers:
+        location: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}/toppings
+
+  - name: verify that we get status code 200 and all toppings for a pizza
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}/toppings
+      method: GET
+    response:
+      status_code: 200
+      json:
+        - *salami_pizza_salami_topping_quantity
+
   - name: verify that we get status code 404 when trying to get all topping from a not existing pizza type
     request:
       url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{not_available_id}/toppings
@@ -253,15 +253,15 @@ stages:
     response:
       status_code: 404
 
-#  - name: Get dough of pizza_type
-#    request:
-#      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}/dough
-#      method: GET
-#    response:
-#      status_code: 200
-#      json:
-#        <<: *dough
-#        id: "{dough_id}"
+  - name: Get dough of pizza_type
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}/dough
+      method: GET
+    response:
+      status_code: 200
+      json:
+        <<: *dough
+        id: "{dough_id}"
 
   - name: Verify status code 404 when trying to get the dough of a non-existent pizza type
     request:
@@ -270,23 +270,23 @@ stages:
     response:
       status_code: 404
 
-#  - name: Get sauce of pizza_type
-#    request:
-#      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}/sauce
-#      method: GET
-#    response:
-#      status_code: 200
-#      json:
-#        <<: *sauce
-#        id: "{sauce_id}"
-#
-#  - name: Verify status code 404 when trying to get the sauce of a non-existent pizza type
-#    request:
-#      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{not_available_id}/sauce
-#      method: GET
-#    response:
-#      status_code: 404
-#
+  - name: Get sauce of pizza_type
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}/sauce
+      method: GET
+    response:
+      status_code: 200
+      json:
+        <<: *sauce
+        id: "{sauce_id}"
+
+  - name: Verify status code 404 when trying to get the sauce of a non-existent pizza type
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{not_available_id}/sauce
+      method: GET
+    response:
+      status_code: 404
+
   - name: Check for status 404 when trying to delete a non existent pizza type
     request:
       url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/00000000-0000-0000-0000-000000000000
