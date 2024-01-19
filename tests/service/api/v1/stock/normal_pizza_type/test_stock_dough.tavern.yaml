@@ -9,36 +9,36 @@ includes:
   - !include ../../users/user_stage.yaml
 
 stages:
-##-------------------Create Order------------------------
-#  #Create User
-#  - type: ref
-#    id: create_user
-#
-#  #Create Order
-#  - type: ref
-#    id: create_order
-#
-#
-##--------------------Create everything needed for a Pizza-------------------------------
-#  #Create Dough with 0 stock
-#  - name: Verify that status code equals 201 when we create a new dough and the dough is returned
-#    request:
-#      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/doughs
-#      json: &dough
-#        name: "{dough_name:s}"
-#        price: !float "{dough_price:f}"
-#        description: "{dough_description}"
-#        stock: !int 0
-#      method: POST
-#    response:
-#      status_code: 201
-#      json:
-#        <<: *dough
-#        id: !anything
-#      save:
-#        json:
-#          dough_id: id
-#
+#-------------------Create Order------------------------
+  #Create User
+  - type: ref
+    id: create_user
+
+  #Create Order
+  - type: ref
+    id: create_order
+
+
+#--------------------Create everything needed for a Pizza-------------------------------
+  #Create Dough with 0 stock
+  - name: Verify that status code equals 201 when we create a new dough and the dough is returned
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/doughs
+      json: &dough
+        name: "{dough_name:s}"
+        price: !float "{dough_price:f}"
+        description: "{dough_description}"
+        stock: !int 0
+      method: POST
+    response:
+      status_code: 201
+      json:
+        <<: *dough
+        id: !anything
+      save:
+        json:
+          dough_id: id
+
 #  #Create pizza_type
 #  - type: ref
 #    id: create_pizza_type
@@ -123,15 +123,15 @@ stages:
 #      save:
 #        json:
 #          pizza_id: id
-#
-#  #Delete Order
-#  - type: ref
-#    id: delete_order
-#
-#  #Delete user
-#  - type: ref
-#    id: delete_user
-#
+
+  #Delete Order
+  - type: ref
+    id: delete_order
+
+  #Delete user
+  - type: ref
+    id: delete_user
+
 #  - name: Verify if dough stock was increased to the original stock
 #    request:
 #      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/doughs/{dough_id}
@@ -146,11 +146,11 @@ stages:
 #  #Delete Pizza_type
 #  - type: ref
 #    id: delete_pizza_type
-#
-#  #Delete Dough
-#  - name: Delete dough
-#    request:
-#      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/doughs/{dough_id}
-#      method: DELETE
-#    response:
-#      status_code: 204
+
+  #Delete Dough
+  - name: Delete dough
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/doughs/{dough_id}
+      method: DELETE
+    response:
+      status_code: 204
