@@ -72,59 +72,59 @@ stages:
           pizza_type_id: id
 
 
-#  - name: Verify that status code equals 303 and we get a redirect to an already existing item, when we create a new pizza with a name that already exists
-#    request:
-#      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types
-#      json:
-#        <<: *salami_type_request
-#        name: "{pizza_name:s}"
-#        price: 9.00
-#        description: "My new pizza"
-#      method: POST
-#    response:
-#      status_code: 303
-#      headers:
-#        location: "http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}"
-#
-#  - name: Verify that status code equals 404 when we create a new pizza with a non-existent dough
-#    request:
-#      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types
-#      json:
-#        name: "random name"
-#        price: !float "{pizza_price:f}"
-#        description: "{pizza_description}"
-#        dough_id: "{not_available_id}"
-#        sauce_id: "{sauce_id}"
-#      method: POST
-#    response:
-#      status_code: 404
-#
-#  - name: Get pizza with id
-#    request:
-#      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}
-#      method: GET
-#    response:
-#      status_code: 200
-#      json: &salami_with_topping
-#        <<: *salami_type_response
-#        id: "{pizza_type_id}"
-#
-#  - name: Get pizza with a non existent id
-#    request:
-#      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{not_available_id}
-#      method: GET
-#    response:
-#      status_code: 404
-#
-#  - name: Get a list of pizzas
-#    request:
-#      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types
-#      method: GET
-#    response:
-#      status_code: 200
-#      json:
-#        - *salami_with_topping
-#
+  - name: Verify that status code equals 303 and we get a redirect to an already existing item, when we create a new pizza with a name that already exists
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types
+      json:
+        <<: *salami_type_request
+        name: "{pizza_name:s}"
+        price: 9.00
+        description: "My new pizza"
+      method: POST
+    response:
+      status_code: 303
+      headers:
+        location: "http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}"
+
+  - name: Verify that status code equals 404 when we create a new pizza with a non-existent dough
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types
+      json:
+        name: "random name"
+        price: !float "{pizza_price:f}"
+        description: "{pizza_description}"
+        dough_id: "{not_available_id}"
+        sauce_id: "{sauce_id}"
+      method: POST
+    response:
+      status_code: 404
+
+  - name: Get pizza with id
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}
+      method: GET
+    response:
+      status_code: 200
+      json: &salami_with_topping
+        <<: *salami_type_response
+        id: "{pizza_type_id}"
+
+  - name: Get pizza with a non existent id
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{not_available_id}
+      method: GET
+    response:
+      status_code: 404
+
+  - name: Get a list of pizzas
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types
+      method: GET
+    response:
+      status_code: 200
+      json:
+        - *salami_with_topping
+
 #  - name: Update pizza
 #    request:
 #      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/pizza-types/{pizza_type_id}
