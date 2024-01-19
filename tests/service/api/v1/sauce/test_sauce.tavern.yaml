@@ -102,18 +102,18 @@ stages:
         json:
           italian_id: id
 
-#  - name: Check for status 303 if we update sauce to an already existing name
-#    request:
-#      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/sauces/{sauce_id}
-#      method: PUT
-#      json:
-#        <<: *sauce
-#        name: "Italian Style"
-#    response:
-#      status_code: 303
-#      headers:
-#        location: "http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/sauces/{italian_id}"
-#
+  - name: Check for status 303 if we update sauce to an already existing name
+    request:
+      url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/sauces/{sauce_id}
+      method: PUT
+      json:
+        <<: *sauce
+        name: "Italian Style"
+    response:
+      status_code: 303
+      headers:
+        location: "http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/sauces/{italian_id}"
+
   - name: Check for status 404 if we update with a non existing id
     request:
       url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/sauces/00000000-0000-0000-0000-000000000000
