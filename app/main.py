@@ -32,7 +32,7 @@ tags_metadata = [
 
     {
         'name': 'sauce',
-        'description': 'Operations with sauces'
+        'description': 'Operations with sauces. ',
     },
     {
         'name': 'topping',
