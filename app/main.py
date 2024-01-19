@@ -29,6 +29,11 @@ tags_metadata = [
         'name': 'dough',
         'description': 'Operations with doughs. ',
     },
+
+    {
+        'name': 'sauce',
+        'description': 'Operations with sauces. ',
+    },
     {
         'name': 'topping',
         'description': 'Operations with toppings. ',

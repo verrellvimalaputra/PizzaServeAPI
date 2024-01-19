@@ -5,6 +5,8 @@ import app.api.v1.endpoints.order.crud as order_crud
 import app.api.v1.endpoints.pizza_type.crud as pizza_crud
 import app.api.v1.endpoints.beverage.crud as beverage_crud
 import app.api.v1.endpoints.dough.crud as dough_crud
+import app.api.v1.endpoints.sauce.crud as sauce_crud
+from app.api.v1.endpoints.sauce.schemas import SauceCreateSchema
 from app.api.v1.endpoints.dough.schemas import DoughCreateSchema
 from app.api.v1.endpoints.user.schemas import UserCreateSchema
 from app.api.v1.endpoints.order.schemas import OrderCreateSchema
@@ -39,6 +41,11 @@ def test_order_create_read_delete(db):
     new_dough_description = 'new dough'
     new_dough_stock = 20
 
+    new_sauce_name = 'tomato'
+    new_sauce_price = 1.0
+    new_sauce_description = 'new sauce'
+    new_sauce_stock = 30
+
     new_pizza_type_name = 'pizza_test'
     new_pizza_type_price = 8
     new_pizza_type_description = 'Pepsi'
@@ -66,8 +73,14 @@ def test_order_create_read_delete(db):
     db_dough = dough_crud.create_dough(dough, db)
     created_dough_id = db_dough.id
 
+    sauce = SauceCreateSchema(name=new_sauce_name, price=new_sauce_price,
+                              description=new_sauce_description, stock=new_sauce_stock)
+    db_sauce = sauce_crud.create_sauce(sauce, db)
+    created_sauce_id = db_sauce.id
+
     pizza_type = PizzaTypeCreateSchema(name=new_pizza_type_name, price=new_pizza_type_price,
-                                       description=new_pizza_type_description, dough_id=created_dough_id)
+                                       description=new_pizza_type_description, dough_id=created_dough_id,
+                                       sauce_id=created_sauce_id)
     db_pizza_type = pizza_crud.create_pizza_type(pizza_type, db)
     created_pizza_type_id = db_pizza_type.id
 
@@ -141,6 +154,13 @@ def test_order_create_read_delete(db):
     # Assert: Correct pizza was deleted from database
     deleted_pizza = pizza_crud.get_pizza_type_by_id(created_pizza_type_id, db)
     assert deleted_pizza is None
+
+    # Act: Delete sauce from database
+    sauce_crud.delete_sauce_by_id(created_sauce_id, db)
+
+    # Assert: Correct sauce was deleted from database
+    deleted_sauce = sauce_crud.get_sauce_by_id(created_sauce_id, db)
+    assert deleted_sauce is None
 
     # Act: Delete dough from database
     dough_crud.delete_dough_by_id(created_dough_id, db)

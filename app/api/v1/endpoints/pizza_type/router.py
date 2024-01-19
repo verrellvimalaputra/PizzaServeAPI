@@ -7,9 +7,11 @@ from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 
 import app.api.v1.endpoints.dough.crud as dough_crud
+import app.api.v1.endpoints.sauce.crud as sauce_crud
 import app.api.v1.endpoints.pizza_type.crud as pizza_type_crud
 import app.api.v1.endpoints.topping.crud as topping_crud
 from app.api.v1.endpoints.dough.schemas import DoughSchema
+from app.api.v1.endpoints.sauce.schemas import SauceSchema
 from app.api.v1.endpoints.pizza_type.schemas import \
     JoinedPizzaTypeQuantitySchema, \
     PizzaTypeSchema, \
@@ -48,7 +50,11 @@ def create_pizza_type(
         return RedirectResponse(url=url, status_code=status.HTTP_303_SEE_OTHER)
 
     dough = dough_crud.get_dough_by_id(pizza_type.dough_id, db)
+    sauce = sauce_crud.get_sauce_by_id(pizza_type.sauce_id, db)
     if not dough:
+        raise HTTPException(status_code=404, detail=ITEM_NOT_FOUND)
+
+    if not sauce:
         raise HTTPException(status_code=404, detail=ITEM_NOT_FOUND)
 
     new_pizza_type = pizza_type_crud.create_pizza_type(pizza_type, db)
@@ -193,3 +199,23 @@ def get_pizza_type_dough(
     dough = pizza_type.dough
 
     return dough
+
+
+@router.get(
+    '/{pizza_type_id}/sauce',
+    response_model=SauceSchema,
+    tags=['pizza_type'],
+)
+def get_pizza_type_sauce(
+        pizza_type_id: uuid.UUID,
+        response: Response,
+        db: Session = Depends(get_db),
+):
+    pizza_type = pizza_type_crud.get_pizza_type_by_id(pizza_type_id, db)
+
+    if not pizza_type:
+        raise HTTPException(status_code=404, detail=ITEM_NOT_FOUND)
+
+    sauce = pizza_type.sauce
+
+    return sauce
