@@ -79,7 +79,7 @@ def get_sauce(sauce_id: uuid.UUID,
     sauce = sauce_crud.get_sauce_by_id(sauce_id, db)
 
     if not sauce:
-        raise HTTPException(status_code=404, detail='ITEM_NOT_FOUND')
+        raise HTTPException(status_code=404, detail=ITEM_NOT_FOUND)
     return sauce
 
 
@@ -88,7 +88,7 @@ def delete_sauce(sauce_id: uuid.UUID, db: Session = Depends(get_db)):
     sauce = sauce_crud.get_sauce_by_id(sauce_id, db)
 
     if not sauce:
-        raise HTTPException(status_code=404, detail='ITEM_NOT_FOUND')
+        raise HTTPException(status_code=404, detail=ITEM_NOT_FOUND)
 
     sauce_crud.delete_sauce_by_id(sauce_id, db)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
