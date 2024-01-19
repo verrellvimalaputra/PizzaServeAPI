@@ -19,6 +19,11 @@ variables:
   dough_description: "Test Dough"
   dough_stock: 2
 
+  sauce_name: "Tomato"
+  sauce_price: 1.50
+  sauce_description: "Test Sauce"
+  sauce_stock: 2
+
   topping_name: "Salami"
   topping_price: 1.50
   topping_description: "Italian quality"
