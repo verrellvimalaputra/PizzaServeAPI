@@ -7,6 +7,9 @@ def ingredients_are_available(pizza_type: PizzaType):
     if pizza_type.dough.stock == 0:
         return False
 
+    if pizza_type.sauce.stock == 0:
+        return False
+
     for topping_quantity in pizza_type.toppings:
         if topping_quantity.topping.stock < topping_quantity.quantity:
             return False
@@ -16,6 +19,7 @@ def ingredients_are_available(pizza_type: PizzaType):
 
 def reduce_stock_of_ingredients(pizza_type: PizzaType, db: Session):
     pizza_type.dough.stock -= 1
+    pizza_type.sauce.stock -= 1
     for topping_quantity in pizza_type.toppings:
         topping_quantity.topping.stock -= topping_quantity.quantity
 
@@ -24,6 +28,7 @@ def reduce_stock_of_ingredients(pizza_type: PizzaType, db: Session):
 
 def increase_stock_of_ingredients(pizza_type: PizzaType, db: Session):
     pizza_type.dough.stock += 1
+    pizza_type.sauce.stock += 1
 
     for topping_quantity in pizza_type.toppings:
         topping_quantity.topping.stock += topping_quantity.quantity

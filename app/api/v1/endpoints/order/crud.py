@@ -82,15 +82,16 @@ def get_pizza_by_id(pizza_id: uuid.UUID, db):
 
 
 def get_all_pizzas_of_order(order: Order, db: Session):
-    pizza_types = db.query(Pizza.id, PizzaType.name, PizzaType.price, PizzaType.description, PizzaType.dough_id) \
+    pizza_types = db.query(Pizza.id, PizzaType.name, PizzaType.price,
+                           PizzaType.description, PizzaType.dough_id, PizzaType.sauce_id) \
         .join(Pizza.pizza_type) \
         .filter(Pizza.order_id == order.id)
 
-    returnlist: List[JoinedPizzaPizzaTypeSchema] = []
+    return_list: List[JoinedPizzaPizzaTypeSchema] = []
     for pizza_type in pizza_types.all():
-        returnlist.append(pizza_type)
+        return_list.append(pizza_type)
 
-    return returnlist
+    return return_list
 
 
 def delete_pizza_from_order(order: Order, pizza_id: uuid.UUID, db: Session):
