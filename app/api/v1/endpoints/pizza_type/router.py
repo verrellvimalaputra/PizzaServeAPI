@@ -202,7 +202,7 @@ def get_pizza_type_dough(
 
 
 @router.get(
-    '{pizza_type_id}/sauce',
+    '/{pizza_type_id}/sauce',
     response_model=SauceSchema,
     tags=['pizza_type'],
 )

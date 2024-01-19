@@ -20,7 +20,7 @@ variables:
   dough_stock: 2
 
   sauce_name: "Tomato"
-  sauce_price: 1.50
+  sauce_price: 1
   sauce_description: "Test Sauce"
   sauce_stock: 2
 
