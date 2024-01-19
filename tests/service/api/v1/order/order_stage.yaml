@@ -3,7 +3,7 @@
 name: Order stage
 
 description:
-  Reusable test stage for creating doughs
+  Reusable test stage for creating orders
 
 variables:
   address_street: "Schöfferstraße"

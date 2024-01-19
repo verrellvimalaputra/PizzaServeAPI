@@ -11,6 +11,11 @@ variables:
     dough_description: "Neapolitan Dough"
     dough_stock: 10
 
+    sauce_name: "Tomato"
+    sauce_price: 1
+    sauce_description: "Test sauce"
+    sauce_stock: 30
+
     topping1_name: "Fungi"
     topping1_price: 1.20
     topping1_description: "Fungi"
