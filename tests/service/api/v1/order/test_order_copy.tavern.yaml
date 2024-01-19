@@ -6,7 +6,7 @@ includes:
   - !include common.yaml
   - !include ../order/order_stage.yaml
   - !include ../dough/dough_stage.yaml
-  - !inlcude ../sauce/sauce_stage.yaml
+  - !include ../sauce/sauce_stage.yaml
   - !include ../beverage/beverage_stage.yaml
   - !include ../pizza_type/pizza_type_stage.yaml
   - !include ../users/user_stage.yaml
