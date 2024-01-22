@@ -13,6 +13,7 @@ def db():
     finally:
         db.close()
 
+
 def test_sauce_create_read_delete(db):
     new_sauce_name = 'new_sauce_test'
     new_sauce_price = 9.0
