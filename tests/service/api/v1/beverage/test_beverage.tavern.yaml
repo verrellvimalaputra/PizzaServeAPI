@@ -64,7 +64,7 @@ stages:
       url: http://{tavern.env_vars.API_SERVER}:{tavern.env_vars.API_PORT}/v1/beverages
       method: GET
     response:
-      strict: False
+      strict: False 
       status_code: 200
       json: !anylist
         id: "{beverage_id}"
